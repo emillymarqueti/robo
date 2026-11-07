@@ -3,6 +3,7 @@ package br.com.joaocarloslima.robo.model;
 public class ZigueZague implements Rota {
 
     private Direcao horizontal = Direcao.DIREITA;
+    private Direcao vertical = Direcao.BAIXO;
 
     @Override
     public String getNome() {
@@ -22,12 +23,16 @@ public class ZigueZague implements Rota {
             horizontal = Direcao.DIREITA;
         }
 
-        if (sala.livre(atual.mover(Direcao.BAIXO))) {
-            return Direcao.BAIXO;
+        if (!sala.livre(atual.mover(vertical))) {
+            if (vertical == Direcao.BAIXO) {
+                vertical = Direcao.CIMA;
+            } else {
+                vertical = Direcao.BAIXO;
+            }
         }
 
-        if (sala.livre(atual.mover(Direcao.CIMA))) {
-            return Direcao.CIMA;
+        if (sala.livre(atual.mover(vertical))) {
+            return vertical;
         }
 
         return horizontal;
